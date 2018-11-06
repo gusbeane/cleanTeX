@@ -1,0 +1,127 @@
+% this is a LaTeX file
+%----------------------------------------------------------------------
+% name:
+%   hogg_cv.tex
+% purpose:
+%   Hogg's CV and list of publications
+% to-do:
+%   - Convert all \ads{} to \doi{} -- the DOIs should exist now.
+%   - Is the ``what constrains'' paper published anywhere?
+%   - Should I make an \acronym{} macro that uses \small?  I should.
+% comments:
+%   - Don't list full author lists of 10 or more.
+%   - If you want to include/remove the date, see \renewcommand{\today}.
+%   - Swap 1/0 flag to include invited talks.
+%----------------------------------------------------------------------
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage{cleanTeX}
+\usepackage{pagecolor}
+\usepackage{multicol}
+
+\usepackage{natbib}
+\bibliographystyle{apj}
+
+\usepackage{xstring}
+
+% put in the date -- or not
+%  \renewcommand{\today}{2018 October 20}
+
+% define colors
+
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{bm}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+
+\newcommand{\pc}{\text{pc}}
+\newcommand{\Myr}{\text{Myr}}
+\newcommand{\Gyr}{\text{Gyr}}
+
+\newcommand{\Msun}{\text{M}_\odot}
+
+\newcommand{\cluster}{\text{cluster}}
+\newcommand{\dint}{\text{d}}
+
+\newcommand{\oceanic}{\href{https://github.com/gusbeane/oceanic}{\texttt{oceanic}}}
+\newcommand{\BRIDGE}{\texttt{BRIDGE}}
+\newcommand{\AMUSE}{\texttt{AMUSE}}
+
+\fancypagestyle{firstpage}{%
+  \lhead{\deemph{\texttt{cleanTeX v0.1}}}
+}
+
+\begin{document}
+\thispagestyle{firstpage}%\sloppy\sloppypar\raggedbottom%\frenchspacing
+\ifdefined\dark
+    \pagecolor{bggrey}
+    \color{white}
+\fi
+
+\def\parskipdefault{\parskip}
+\setlength{\parskip}{1.2ex}
+
+\def\parindentdefault{\parindent}
+\setlength{\parindent}{0pt}
+
+\textbf{\Large On Open Cluster Disruption I. Action Space Evolution}
+
+\href{https://gusbeane.com}{Angus Beane}\textsuperscript{\textcolor{gray}{\hspace{0.063ex}1,2}}, {\em et al.}
+
+\texttt{abeane@sas.upenn.edu}
+
+
+\begin{list}{\pubnumber{\therefpubnum}}{\affilist}
+\item\institution{Center for Computational Astrophysics, Flatiron Institute}{https://www.simonsfoundation.org/flatiron/center-for-computational-astrophysics}
+\item\institution{Department of Physics \& Astronomy, University of Pennsylvania}{https://www.physics.upenn.edu}
+\end{list}
+
+
+
+\deemph{\today}
+
+\hoggheading{Abstract}
+Open clusters survive from dissipated gas clouds as loosely bound star clusters. Over a fairly short time, galactic tides disrupt open clusters. Over time, ejected members mix in phase-space, slowly becoming indistinguishable from the rest of the field stars as the cluster and ejected members evolve on different orbits. Since actions are dynamical invariants, they should in principle not evolve strongly once a star leaves a cluster, and thus we expect stars ejected from open clusters to be close to the cluster in action space. We test this assumption by developing \oceanic, a package allowing us to perform within \AMUSE an n-body integration of an open cluster coupled to a fully-time evolving tidal field from the FIRE-2 Milky Way zoom-in simulations ({\em Latte}). We find that XXX. Furthermore, \oceanic will be available within \AMUSE in the near future.
+
+\deemph{Keywords: open cluster, dynamics -- Milky Way -- Galactic dynamics -- numerical -- actions}
+
+%\twocolumn
+
+\setlength{\parskip}{\parskipdefault}
+\setlength{\parindent}{\parindentdefault}
+
+
+\begin{multicols}{2}
+
+\hoggsection{Introduction}{sec:intro}
+The study of self-gravitating systems is one of the oldest problem in physics \citep{Newton1687:Principia}. The classic solution arises in the two-body problem when one body is much more massive than the other. However, the general n-body problem is intractable analytically. Therefore, computer simulations have driven our understanding of more complex self-gravitating systems, with analytic solutions only available in a statistical manner.
+
+Open clusters, remnants of star forming clouds, are the closest experimental objects to a purely gravitational N-body system.\footnote{When N is large and/or when all particles are of comparable mass (to exclude the solar system).} However, open clusters are not purely gravitational. They are also driven by many other processes.
+
+The study of galactic morphology, on the other hand, is just a budding discipline. Computer simulations of galaxies has had a long and troubled history, with accurate models developed in only the past few years. Because we understand the Milky Way (MW) to a much higher resolution than any other galaxy, simulations targetting MW-like galaxies are of particular interest. Specifically, MW zoom-ins provide the highest available resolution simulations of the MW -- reaching $\pc$ resolution in the densest gaseous regions. Zoom-in simulations are a technique where a small region of interest in a cosmological volume is simulated at a high resolution keeping the rest of the simulation at a low resolution. This ensures the region of interest is evolved in a realistic tidal background while the speed-up achieved by simulating the environment at a lower resolution allows even higher resolution for the region of interest.
+
+While MW zoom-ins are not perfect, they are able to achieve impressive consistency with observations of the MW. They can include features such as spiral arms, bars, bulges, and large gas clouds. It is thus timely to combine the realistic galactic potential afforded by these simulations with the study of the dynamical evolution of star clusters. We have developed a general code to simulate star clusters in the background of an evolving simulated potential. In this study we focus on low to medium mass open clusters (OCs) in the post-gas expulsion phase in the disk. Thus, gravity is the dominant interaction between cluster members.
+
+In a sense we are testing the dynamical memory of cluster members post-ejection. Our driving assumption is that the actions of a cluster member should not depart strongly from the actions of its parent cluster. This has been shown to be true for stellar streams formed from globular cluster infall \citep{Eyre11:MechTidalStreams}. This assumption is also supported by \citet{Beane18:Actions}, which suggested that action-space evolution commences via a small number of dramatic events (e.g. spiral arm resonances) as opposed to a large number of small events (e.g. gas cloud interactions).
+
+\hoggsection{Methods}{sec:methods}
+
+Here we give a general overview of the implementation details of oceanic. In subsequent subsections we describe different steps in more detail. Guidance on usage and simulation parameters will be given in a future code paper.
+
+REWRITE THIS: Our method is an extension of previous linear tidal approximations \citep{Renaud11:NBODY6tt,Mamikonyan17:Kira}. These previous methods take a star particle in a cosmological simulation of interest and at each timestep store a computed tidal tensor. Then, the acceleration of a star particle is found by linearly expanding (in position) the tidal field,
+\beq\label{eq:tidal_linear}
+\frac{\dint^2 \bm{r}}{\dint t^2} = - \nabla \phi_c(\bm{r}) + \bm{T}(\bm{r}) \cdot \bm{r}\text{,}
+\eeq
+where $\phi_c$ is the gravitational potential from the cluster and $\bm{T}$ is the tidal tensor (i.e. the galaxy contribution). A separate simulation is then performed. The cluster is evolved in isolation, with the galaxy's effect captured by the linear tidal term.
+
+While the linear expansion is sufficient for studying the internal dynamics of open clusters, this expansion is insufficient for correctly evolving stars that have been ejected far from the cluster ($\sim 100\,\pc$). The purpose of calculating the tidal tensor is to find the acceleration on a star at position $\bm{r}$. Our approach instead first recomputes the acceleration from the galaxy on a regular grid of points $\bm{r}_i$. We then spatially interpolate to find the acceleration at an arbitrary position $\bm{r}$.
+
+We perform this procedure at each simulation snapshot with the same grid. We then interpolate in time using \texttt{scipy}'s cubic interpolator.
+
+\bibliography{references}
+
+\end{multicols}
+
+\end{document}
