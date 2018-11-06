@@ -10,9 +10,8 @@ then
   conda config --set always_yes yes --set changeps1 no
   conda update -q conda
   conda info -a
-  conda create --yes -n paper
-  source activate paper
   conda install -c conda-forge -c pkgw-forge tectonic
+  tectonic --help
 
   # Build the paper using tectonic
   cd paper
