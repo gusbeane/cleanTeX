@@ -110,7 +110,7 @@ In a sense we are testing the dynamical memory of cluster members post-ejection.
 
 Here we give a general overview of the implementation details of oceanic. In subsequent subsections we describe different steps in more detail. Guidance on usage and simulation parameters will be given in a future code paper.
 
-REWRITE THIS: Our method is an extension of previous linear tidal approximations \citep{Renaud11:NBODY6tt,Mamikonyan17:Kira}. These previous methods take a star particle in a cosmological simulation of interest and at each timestep store a computed tidal tensor. Then, the acceleration of a star particle is found by linearly expanding (in position) the tidal field,
+RREWRITE THIS: Our method is an extension of previous linear tidal approximations \citep{Renaud11:NBODY6tt,Mamikonyan17:Kira}. These previous methods take a star particle in a cosmological simulation of interest and at each timestep store a computed tidal tensor. Then, the acceleration of a star particle is found by linearly expanding (in position) the tidal field,
 \beq\label{eq:tidal_linear}
 \frac{\dint^2 \bm{r}}{\dint t^2} = - \nabla \phi_c(\bm{r}) + \bm{T}(\bm{r}) \cdot \bm{r}\text{,}
 \eeq

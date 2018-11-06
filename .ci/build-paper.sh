@@ -10,13 +10,21 @@ then
   conda config --set always_yes yes --set changeps1 no
   conda update -q conda
   conda info -a
-  conda install -c conda-forge -c pkgw-forge tectonic
-  tectonic --help
+  conda install -c conda-forge texlive-core 
 
   # Build the paper using tectonic
   cd paper
-  tectonic beane_paper.tex --print
-  tectonic beane_paper-dark.tex --print
+  pdflatex beane_paper.tex
+  bibtex beane_paper
+  bibtex beane_paper
+  pdflatex beane_paper.tex
+  pdflatex beane_paper.tex
+  
+  pdflatex beane_paper-dark.tex
+  bibtex beane_paper-dark
+  bibtex beane_paper-dark
+  pdflatex beane_paper-dark.tex
+  pdflatex beane_paper-dark.tex
 
   # Force push the paper to GitHub
   cd $TRAVIS_BUILD_DIR
