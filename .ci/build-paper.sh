@@ -4,27 +4,44 @@ if git diff --name-only $TRAVIS_COMMIT_RANGE | grep 'paper/'
 then
   # Install tectonic using conda
   wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+
   bash miniconda.sh -b -p $HOME/miniconda
   export PATH="$HOME/miniconda/bin:$PATH"
+
+  # Conda Python
   hash -r
   conda config --set always_yes yes --set changeps1 no
   conda update -q conda
   conda info -a
-  conda install -c conda-forge texlive-core 
+  conda create --yes -n paper
+  source activate paper
+  conda install -c conda-forge -c pkgw-forge tectonic
+  
+  # wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  # bash miniconda.sh -b -p $HOME/miniconda
+  # export PATH="$HOME/miniconda/bin:$PATH"
+  # hash -r
+  # conda config --set always_yes yes --set changeps1 no
+  # conda update -q conda
+  # conda info -a
+  # conda install -c conda-forge texlive-core 
 
   # Build the paper using tectonic
-  cd paper
-  pdflatex beane_paper.tex
-  bibtex beane_paper
-  bibtex beane_paper
-  pdflatex beane_paper.tex
-  pdflatex beane_paper.tex
+  tectonic beane_paper.tex --print
   
-  pdflatex beane_paper-dark.tex
-  bibtex beane_paper-dark
-  bibtex beane_paper-dark
-  pdflatex beane_paper-dark.tex
-  pdflatex beane_paper-dark.tex
+  # cd paper
+  # pdflatex beane_paper.tex
+  # bibtex beane_paper
+  # bibtex beane_paper
+  # pdflatex beane_paper.tex
+  # pdflatex beane_paper.tex
+  
+  # Build dark mode
+  # pdflatex beane_paper-dark.tex
+  # bibtex beane_paper-dark
+  # bibtex beane_paper-dark
+  # pdflatex beane_paper-dark.tex
+  # pdflatex beane_paper-dark.tex
 
   # Force push the paper to GitHub
   cd $TRAVIS_BUILD_DIR
