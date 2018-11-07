@@ -1,12 +1,20 @@
-sudo: require 
+sudo: required
 language: generic
-matrix:
-  include:
-    - os: linux
-      env: TEST_LANG='paper'
+services: docker
 
-script: |
-  if [[ $TEST_LANG == paper ]]
-  then
-    source .ci/build-paper.sh
-  fi
+script:
+  - docker pull dxjoke/tectonic-docker
+  - source .ci/build-paper.sh
+
+#sudo: require 
+#language: generic
+#matrix:
+#  include:
+#    - os: linux
+#      env: TEST_LANG='paper'
+#
+#script: |
+#  if [[ $TEST_LANG == paper ]]
+#  then
+#    source .ci/build-paper.sh
+#  fi
