@@ -4,8 +4,8 @@ services: docker
 
 script:
   - docker pull dxjoke/tectonic-docker
-  - docker run --mount src=$TRAVIS_BUILD_DIR/paper,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic beane_paper.tex"
-  - docker run --mount src=$TRAVIS_BUILD_DIR/paper,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic beane_paper-dark.tex"
+  - docker run --mount src=$TRAVIS_BUILD_DIR/paper,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --print beane_paper.tex"
+  #- docker run --mount src=$TRAVIS_BUILD_DIR/paper,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic beane_paper-dark.tex"
   #- docker tectonic paper/beane_paper.tex
   - source .ci/build-paper.sh
 
