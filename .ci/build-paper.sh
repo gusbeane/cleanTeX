@@ -27,7 +27,7 @@ then
   # conda install -c conda-forge texlive-core 
 
   # Build the paper using tectonic
-  tectonic beane_paper.tex --print
+  #tectonic beane_paper.tex --print
   
   # cd paper
   # pdflatex beane_paper.tex
